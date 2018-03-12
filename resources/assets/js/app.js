@@ -1,7 +1,7 @@
 const $ = require('jquery')
 // const $body = $('body')
 
-window.jQuery = $;
+// window.jQuery = $;
 
 function cycle(wrapper, { speed, timeout }) {
   const elements = wrapper.find('> div')
@@ -22,8 +22,10 @@ function cycle(wrapper, { speed, timeout }) {
     // the element to display - the next element to the visible one
     let toDisplay = selected.next();
     if(toDisplay.length === 0) {
-      // if no next element - go to start
-      toDisplay = $(elements[0]);
+      // toDisplay = $(elements[0]);
+
+      // reload when at end, to reload results
+      location.reload()
     }
 
     // fade over to next element

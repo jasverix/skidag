@@ -12,8 +12,9 @@
             <div>
                 <h1>{{ $result['title'] }}</h1>
                 <ol>
-                    @foreach($result['standings'] as $i => $name)
-                        <li>{{ $name }}</li>
+                    @foreach($result['standings'] as $i => $standing)
+                        <li><span class="name">{{ $standing['name'] }}</span> -
+                            <span class="score">{{ $standing['score'] }}</span></li>
                     @endforeach
                 </ol>
             </div>

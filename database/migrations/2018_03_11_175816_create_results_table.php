@@ -15,11 +15,12 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->integer('id', true, true);
-            $table->primary('id');
+          // $table->primary('id');
             $table->string('name', 100)->index();
             $table->decimal('seconds', 10, 2);
             $table->integer('age', false, true);
             $table->integer('gender');
+          $table->string('type', 50)->index();
             $table->timestamps();
         });
     }
