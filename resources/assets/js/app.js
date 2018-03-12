@@ -1,22 +1,45 @@
+const $ = require('jquery')
+// const $body = $('body')
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+window.jQuery = $;
 
-require('./bootstrap');
+function cycle(wrapper, { speed, timeout }) {
+  const elements = wrapper.find('> div')
 
-window.Vue = require('vue');
+  // if one or no elements - don't cycle
+  if (elements.length <= 1) {
+    return;
+  }
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+  // display only the first element
+  elements.filter(':not(:first-child)').hide();
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+  // the actual cycle function
+  function doCycle() {
+    // the visible element
+    const selected = elements.filter(':visible');
 
-const app = new Vue({
-    el: '#app'
+    // the element to display - the next element to the visible one
+    let toDisplay = selected.next();
+    if(toDisplay.length === 0) {
+      // if no next element - go to start
+      toDisplay = $(elements[0]);
+    }
+
+    // fade over to next element
+    selected.fadeOut(speed);
+    toDisplay.fadeIn(speed);
+  }
+
+  setInterval(doCycle, timeout);
+}
+
+$(document).ready(() => {
+  const $results = $('.results-wrapper')
+  if ($results.length) {
+    cycle($results, {
+      speed: 'fast',
+      timeout: 5000,
+    });
+  }
 });
