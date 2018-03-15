@@ -7,11 +7,26 @@
 
 body.results-page {
   background-color: white;
+  // background-color: rgb(204, 255, 252);
   font-family: "Walbaum", "Arial", sans-serif;
   color: rgb(53, 85, 113);
 }
 
 .results-wrapper {
+  margin: auto;
+  width: 350px;
+  //width: 50%;
+  height: 200px;
+  font-size: 22px;
+  text-align: center;
+  background: white;
+  // border: 1px solid rgb(70, 70, 120);
+
+  h2 {
+    font-size: 30px;
+    text-align: center;
+  }
+
   > div {
     position: absolute;
     top: 0;

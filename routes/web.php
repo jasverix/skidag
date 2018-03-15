@@ -127,12 +127,25 @@ foreach ($types as $type) {
     return view('form')->with('type', $type)->with('scoreTitle', $scoreTitle)->with('scoreSuffix', $scoreSuffix);
   });
 
-  Route::post($routeUrl, function (Request $request) use ($routeUrl) {
+  Route::post($routeUrl, function (Request $request) use ($routeUrl, $type) {
     /** @noinspection PhpUndefinedMethodInspection */
     $data = $request->validate([
       'name' => 'required|max:100',
       'seconds' => 'required',
     ]);
+
+    $data['age'] = 0;
+    $data['gender'] = -1;
+    $data['type'] = $type;
+
+    if (($name = $data['name'])) {
+      /** @var \App\Result $sameName */
+      $sameName = \App\Result::query()->where('name', '=', $name)->first();
+      if ($sameName) {
+        $data['age'] = $sameName->age;
+        $data['gender'] = $sameName->gender;
+      }
+    }
 
     tap(new \App\Result($data))->save();
 
@@ -165,12 +178,14 @@ Route::post('/admin/edit/{id}', function ($id, Request $request) {
   $data = $request->validate([
     'name' => 'required|max:100',
     'seconds' => 'required',
-    'age' => 'required',
-    'gender' => 'required',
+    'age' => 'required|between:1,100',
+    'gender' => 'required|between:0,1',
   ]);
 
   $data['id'] = $id;
   $data['approved'] = true;
+
+  unset($data['type']);
 
   /** @var \App\Result $result */
   $result = \App\Result::find($id);

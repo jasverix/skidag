@@ -40,6 +40,8 @@
                         <span class="help-block">{{ $errors->first('seconds') }}</span>
                     @endif
                 </div>
+
+                <input type="submit" class="btn btn-primary" value="Send inn"/>
             </form>
         </div>
     </div>

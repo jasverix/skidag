@@ -10000,6 +10000,20 @@ body.results-page {
   color: #355571;
 }
 
+.results-wrapper {
+  margin: auto;
+  width: 350px;
+  height: 200px;
+  font-size: 22px;
+  text-align: center;
+  background: white;
+}
+
+.results-wrapper h2 {
+  font-size: 30px;
+  text-align: center;
+}
+
 .results-wrapper > div {
   position: absolute;
   top: 0;

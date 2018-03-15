@@ -49,14 +49,21 @@
                 <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                     <label for="gender">Kjønn</label>
                     <select class="form-control" name="gender" id="gender">
+                        <option value="-1" {{ (int)old('gender', $result->gender) === -1 ? 'selected' : '' }}>Velg...</option>
                         <option value="0" {{ (int)old('gender', $result->gender) === 0 ? 'selected' : '' }}>Gutt</option>
                         <option value="1" {{ (int)old('gender', $result->gender) === 1 ? 'selected' : '' }}>Jente</option>
                     </select>
+                    @if ($errors->has('gender'))
+                        <span class="help-block">{{ $errors->first('seconds') }}</span>
+                    @endif
                 </div>
 
                 <div class="form-group {{ $errors->has('age') ? 'has-error' : '' }}">
                     <label for="age">Alder</label>
                     <input type="number" min="0" max="100" step="1" value="{{ old('age', $result->age) }}" name="age" id="age" class="form-control"/>
+                    @if ($errors->has('age'))
+                        <span class="help-block">{{ $errors->first('seconds') }}</span>
+                    @endif
                 </div>
 
                 <input type="submit" value="Lagre og godkjenn" name="save" class="btn btn-primary"/>

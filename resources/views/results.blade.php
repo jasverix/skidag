@@ -10,7 +10,7 @@
     <div class="results-wrapper">
         @foreach($results as $result)
             <div>
-                <h1>{{ $result['title'] }}</h1>
+                <h2>{{ $result['title'] }}</h2>
                 <ol>
                     @foreach($result['standings'] as $i => $standing)
                         <li><span class="name">{{ $standing['name'] }}</span> -

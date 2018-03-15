@@ -25,7 +25,7 @@
                 <td>{{ $result->age }}</td>
                 <td>{{ $result->type }}</td>
                 <td>{{ $result->seconds }}</td>
-                <td>{{ ['Gutt', 'Jente'][$result->gender] }}</td>
+                <td>{{ ['Gutt', 'Jente'][$result->gender] ?? 'Ikke definert ennå' }}</td>
             </tr>
         @endforeach
     </table>
