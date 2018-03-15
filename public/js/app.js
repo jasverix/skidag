@@ -2738,7 +2738,8 @@ $(document).ready(function () {
     });
 
 
-    /***/ }),
+    /***/
+  }),
 /* 3 */
 /***/ (function(module, exports) {
 

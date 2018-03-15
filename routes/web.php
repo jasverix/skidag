@@ -14,7 +14,7 @@
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-  $data = \App\Result::all();
+  $data = \App\Result::query()->where('approved', '=', true)->get();
   $index = [];
 
   foreach ($data as $result) {
@@ -36,9 +36,9 @@ Route::get('/', function () {
     }
 
     if ($result->age < 8) {
-      $ageGroup = '0-8';
+      $ageGroup = '0-7';
     } elseif ($result->age < 13) {
-      $ageGroup = '8-13';
+      $ageGroup = '8-12';
     } else {
       continue; // don't display this person
     }
@@ -128,6 +128,7 @@ foreach ($types as $type) {
   });
 
   Route::post($routeUrl, function (Request $request) use ($routeUrl) {
+    /** @noinspection PhpUndefinedMethodInspection */
     $data = $request->validate([
       'name' => 'required|max:100',
       'seconds' => 'required',
@@ -138,3 +139,43 @@ foreach ($types as $type) {
     return redirect($routeUrl);
   });
 }
+
+Route::get('/admin', function () {
+  $data = \App\Result::query()->where('approved', '=', false)->get();
+
+  return view('admin-list')->with('results', $data);
+});
+
+Route::get('/admin/edit/{id}', function ($id) {
+  /** @var \App\Result $result */
+  $result = \App\Result::findOrFail($id);
+  $type = $result->type;
+  $scoreTitle = 'Sekunder';
+  $scoreSuffix = 'sekunder';
+  if ($type === 'Hopp') {
+    $scoreTitle = 'Lengde';
+    $scoreSuffix = 'meter';
+  }
+
+  return view('admin-edit')->with('result', $result)->with('type', $type)->with('scoreTitle', $scoreTitle)->with('scoreSuffix', $scoreSuffix);
+});
+
+Route::post('/admin/edit/{id}', function ($id, Request $request) {
+  /** @noinspection PhpUndefinedMethodInspection */
+  $data = $request->validate([
+    'name' => 'required|max:100',
+    'seconds' => 'required',
+    'age' => 'required',
+    'gender' => 'required',
+  ]);
+
+  $data['id'] = $id;
+  $data['approved'] = true;
+
+  /** @var \App\Result $result */
+  $result = \App\Result::find($id);
+  $result->fill($data);
+  $result->save();
+
+  return redirect('/admin');
+});

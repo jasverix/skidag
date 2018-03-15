@@ -6,7 +6,9 @@
 @import '~bootstrap/scss/bootstrap';
 
 body.results-page {
-  // background-color: blue;
+  background-color: white;
+  font-family: "Walbaum", "Arial", sans-serif;
+  color: rgb(53, 85, 113);
 }
 
 .results-wrapper {

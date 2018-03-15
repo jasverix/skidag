@@ -9994,6 +9994,12 @@ a.text-dark:focus {
   }
 }
 
+body.results-page {
+  background-color: white;
+  font-family: "Walbaum", "Arial", sans-serif;
+  color: #355571;
+}
+
 .results-wrapper > div {
   position: absolute;
   top: 0;
