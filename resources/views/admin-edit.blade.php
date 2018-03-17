@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/app.css" type="text/css"/>
 </head>
 
-<body id="top" class="admin-page">
+<body id="top" class="admin-page" style="padding:15px;">
     <div class="container">
         <div class="row">
             <h1>Rediger oppføring</h1>

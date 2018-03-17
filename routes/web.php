@@ -155,6 +155,8 @@ foreach ($types as $type) {
       }
     }
 
+    $data['name'] = trim($data['name']);
+
     tap(new \App\Result($data))->save();
 
     return redirect($routeUrl);
@@ -194,6 +196,7 @@ Route::post('/admin/edit/{id}', function ($id, Request $request) {
   $data['approved'] = true;
 
   $data['seconds'] = (float)str_replace(',', '.', $data['seconds']);
+  $data['name'] = trim($data['name']);
 
   unset($data['type']);
 
