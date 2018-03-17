@@ -7,6 +7,8 @@
 
 body.results-page {
   background-color: rgb(230, 240, 255);
+  background-image: url('/images/background.jpg');
+  background-size: 100%;
   // background-color: rgb(204, 255, 252);
   font-family: "Walbaum", "Arial", sans-serif;
   color: rgb(53, 85, 113);
@@ -17,13 +19,19 @@ body.results-page {
     width: 100%;
     font-size: 50px;
     margin-bottom: 20px;
-    margin-top: 25px;
   }
 
   h2 {
     text-align: center;
     display: block;
     width: 100%;
+  }
+
+  > .container {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgb(70, 70, 120);
+    margin-top: 25px;
+    padding-top: 10px;
   }
 }
 
@@ -33,11 +41,9 @@ $width: 800px;
   margin: auto;
   width: $width;
   //width: 50%;
-  height: 200px;
+  height: 400px;
   font-size: 32px;
   text-align: center;
-  // background: white;
-  // border: 1px solid rgb(70, 70, 120);
   position: relative;
 
   h2 {
