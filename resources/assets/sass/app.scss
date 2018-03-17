@@ -6,29 +6,48 @@
 @import '~bootstrap/scss/bootstrap';
 
 body.results-page {
-  background-color: white;
+  background-color: rgb(230, 240, 255);
   // background-color: rgb(204, 255, 252);
   font-family: "Walbaum", "Arial", sans-serif;
   color: rgb(53, 85, 113);
+
+  h1 {
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 50px;
+    margin-bottom: 20px;
+    margin-top: 25px;
+  }
+
+  h2 {
+    text-align: center;
+    display: block;
+    width: 100%;
+  }
 }
+
+$width: 800px;
 
 .results-wrapper {
   margin: auto;
-  width: 350px;
+  width: $width;
   //width: 50%;
   height: 200px;
-  font-size: 22px;
+  font-size: 32px;
   text-align: center;
-  background: white;
+  // background: white;
   // border: 1px solid rgb(70, 70, 120);
+  position: relative;
 
   h2 {
-    font-size: 30px;
+    font-size: 40px;
     text-align: center;
   }
 
   > div {
     position: absolute;
     top: 0;
+    width: $width;
   }
 }

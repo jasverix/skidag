@@ -17,18 +17,24 @@ Route::get('/', function () {
   $data = \App\Result::query()->where('approved', '=', true)->get();
   $index = [];
 
+  $genders = ['Gutter', 'Jenter'];
+  $ageGroups = ['0-7', '8-12'];
+  $types = ['Langrenn', 'Skiskyting', 'Hopp'];
+
+  foreach ($types as $type) {
+    foreach ($genders as $gender) {
+      foreach ($ageGroups as $ageGroup) {
+        $key = $type . ' ' . $gender . ' ' . $ageGroup . ' år';
+        $index[$key] = [];
+      }
+    }
+  }
+
+  /** @var \App\Result $result */
   foreach ($data as $result) {
-    switch ($result->gender) {
-      case 0:
-        $gender = 'Gutter';
-        break;
-
-      case 1:
-        $gender = 'Jenter';
-        break;
-
-      default:
-        continue 2; // don't display this person - modify the data first
+    $gender = $genders[$result->gender] ?? null;
+    if ($gender === null) {
+      continue;
     }
 
     if ($result->age < 1) {
@@ -138,6 +144,8 @@ foreach ($types as $type) {
     $data['gender'] = -1;
     $data['type'] = $type;
 
+    $data['seconds'] = (float)str_replace(',', '.', $data['seconds']);
+
     if (($name = $data['name'])) {
       /** @var \App\Result $sameName */
       $sameName = \App\Result::query()->where('name', '=', $name)->first();
@@ -184,6 +192,8 @@ Route::post('/admin/edit/{id}', function ($id, Request $request) {
 
   $data['id'] = $id;
   $data['approved'] = true;
+
+  $data['seconds'] = (float)str_replace(',', '.', $data['seconds']);
 
   unset($data['type']);
 
