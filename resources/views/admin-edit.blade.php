@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Rediger oppføring</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <script src="/js/app.js" type="text/javascript"></script>
     <link rel="stylesheet" href="/css/app.css" type="text/css"/>
