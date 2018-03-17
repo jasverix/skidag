@@ -190,7 +190,15 @@ Route::post('/admin/edit/{id}', function ($id, Request $request) {
     'seconds' => 'required',
     'age' => 'required|between:1,100',
     'gender' => 'required|between:0,1',
+    'reject' => '',
   ]);
+
+  if ($data['reject'] ?? false) {
+    \App\Result::findOrFail($id)->delete();
+
+    return redirect('/admin');
+  }
+  unset($data['reject']);
 
   $data['id'] = $id;
   $data['approved'] = true;

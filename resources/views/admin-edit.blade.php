@@ -67,8 +67,8 @@
                     @endif
                 </div>
 
-                <input type="submit" value="Lagre og godkjenn" name="save" class="btn btn-primary"/>
-                <!-- input type="submit" value="Avvis" name="reject" class="btn btn-danger"/ -->
+                <input type="submit" value="Lagre og godkjenn" name="save" class="btn btn-primary btn-lg"/>
+                <input type="submit" value="Avvis" name="reject" class="btn btn-danger"/>
             </form>
         </div>
     </div>
