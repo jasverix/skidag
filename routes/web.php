@@ -14,64 +14,49 @@
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-  $data = \App\Result::query()->where('approved', '=', true)->get();
   $index = [];
 
   $genders = ['Gutter', 'Jenter'];
-  $ageGroups = ['0-7', '8-12'];
+  $ageGroups = ['0-7' => [0, 7], '8-12' => [8, 12]];
   $types = ['Langrenn', 'Skiskyting', 'Hopp'];
 
   foreach ($types as $type) {
-    foreach ($genders as $gender) {
-      foreach ($ageGroups as $ageGroup) {
+    foreach ($genders as $genderId => $gender) {
+      foreach ($ageGroups as $ageGroup => $ages) {
+        [$minAge, $maxAge] = $ages;
         $key = $type . ' ' . $gender . ' ' . $ageGroup . ' år';
         $index[$key] = [];
+
+        $query = \App\Result::query()->where('approved', '=', true)
+          ->where('type', '=', $type)
+          ->where('gender', '=', $genderId)
+          ->where('age', '<=', $maxAge)
+          ->where('age', '>=', $minAge);
+
+        switch ($type) {
+          case 'Hopp':
+            $query->orderByDesc('seconds');
+            break;
+
+          default:
+            $query->orderBy('seconds');
+            break;
+        }
+
+        $query->limit(5);
+
+        $data = $query->get();
+
+        foreach ($data as $result) {
+          $index[$key][] = $result;
+        }
       }
     }
-  }
-
-  /** @var \App\Result $result */
-  foreach ($data as $result) {
-    $gender = $genders[$result->gender] ?? null;
-    if ($gender === null) {
-      continue;
-    }
-
-    if ($result->age < 1) {
-      continue; // don't display this person - modify the data first
-    }
-
-    if ($result->age < 8) {
-      $ageGroup = '0-7';
-    } elseif ($result->age < 13) {
-      $ageGroup = '8-12';
-    } else {
-      continue; // don't display this person
-    }
-
-    $key = $result->type . ' ' . $gender . ' ' . $ageGroup . ' år';
-
-    $index[$key][] = $result;
   }
 
   $results = [];
 
   foreach ($index as $title => $persons) {
-    usort($persons, function ($p1, $p2) {
-      /** @var $p1 \App\Result */
-      /** @var $p2 \App\Result */
-
-      switch ($p1->type) {
-        case 'Hopp':
-          return $p2->seconds - $p1->seconds;
-
-        default:
-          return $p1->seconds - $p2->seconds;
-      }
-    });
-
-    $persons = array_slice($persons, 0, 5);
-
     $standings = [];
     foreach ($persons as $person) {
       /** @var $person \App\Result */
