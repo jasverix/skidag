@@ -6,9 +6,8 @@
 @import '~bootstrap/scss/bootstrap';
 
 body.results-page {
-  background-color: rgb(230, 240, 255);
-  background-image: url('/images/background.jpg');
-  background-size: 100%;
+  background: rgb(230, 240, 255) url('/images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
   // background-color: rgb(204, 255, 252);
   font-family: "Walbaum", "Arial", sans-serif;
   color: rgb(53, 85, 113);
