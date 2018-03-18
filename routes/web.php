@@ -48,16 +48,22 @@ Route::get('/', function () {
         $data = $query->get();
 
         foreach ($data as $result) {
-          $index[$key][] = $result;
+          $index[$key][] = (object)[
+            'type' => $result->type,
+            'name' => $result->name,
+            'seconds' => $result->seconds,
+          ];
         }
       }
     }
   }
 
   $results = [];
+  $i = 0;
 
   foreach ($index as $title => $persons) {
     $standings = [];
+
     foreach ($persons as $person) {
       /** @var $person \App\Result */
       switch ($person->type) {
@@ -71,7 +77,7 @@ Route::get('/', function () {
           } else {
             $seconds = $person->seconds;
             $minutes = 0;
-            while ($person->seconds >= 60) {
+            while ($seconds >= 60) {
               $seconds -= 60;
               ++$minutes;
             }
@@ -95,6 +101,12 @@ Route::get('/', function () {
       'title' => $title,
       'standings' => $standings,
     ];
+
+    if ($i > 100) {
+      die('100');
+    }
+
+    ++$i;
   }
 
   return view('results')->with('results', $results);
