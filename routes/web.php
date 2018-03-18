@@ -27,7 +27,9 @@ Route::get('/', function () {
         $key = $type . ' ' . $gender . ' ' . $ageGroup . ' år';
         $index[$key] = [];
 
-        $query = \App\Result::query()->where('approved', '=', true)
+        $query = \App\Result::query()
+          ->select(['name', \Illuminate\Support\Facades\DB::raw(($type === 'Hopp' ? 'MAX' : 'MIN') . '(seconds) AS seconds')])
+          ->where('approved', '=', true)
           ->where('type', '=', $type)
           ->where('gender', '=', $genderId)
           ->where('age', '<=', $maxAge)
@@ -43,13 +45,15 @@ Route::get('/', function () {
             break;
         }
 
+        $query->groupBy('name');
+
         $query->limit(5);
 
         $data = $query->get();
 
         foreach ($data as $result) {
           $index[$key][] = (object)[
-            'type' => $result->type,
+            'type' => $type,
             'name' => $result->name,
             'seconds' => $result->seconds,
           ];
@@ -68,7 +72,7 @@ Route::get('/', function () {
       /** @var $person \App\Result */
       switch ($person->type) {
         case 'Hopp':
-          $score = ((int)$person->seconds) . ' meter';
+          $score = ((float)$person->seconds) . ' meter';
           break;
 
         default:
